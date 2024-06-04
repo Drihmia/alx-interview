@@ -8,6 +8,9 @@ from typing import List, Dict
 
 def canUnlockAll(box: List[List[int]]) -> bool:
     """A Function that return true if all boxed are unlockable."""
+    if type(box) is not list:
+        return False
+
     size = len(box)
 
     # If the length of the box is zero, is empty.
