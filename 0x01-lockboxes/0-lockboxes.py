@@ -16,7 +16,7 @@ def canUnlockAll(box: List[List[int]]) -> bool:
 
     # If the first unlocked box is empty, no need to check the whole list.
     if not len(box[0]):
-        return False
+        return True
 
     unLockedBoxes = {box: True if not box else False
                      for box in range(size)}
