@@ -11,6 +11,10 @@ def canUnlockAll(box: List[List[int]]) -> bool:
     if type(box) is not list:
         return False
 
+    for inner_box in box:
+        if type(inner_box) is not list:
+            return False
+
     size = len(box)
 
     # If the length of the box is zero, is empty.
@@ -45,10 +49,6 @@ def helper_function(box: List[List[int]],
         if item > Last_Index or unLockedBoxes.get(item):
             continue
         unLockedBoxes[item] = True
-
-        # Avoiding unecessary recursive calls.
-        # if False not in unLockedBoxes.values():
-        # return unLockedBoxes
 
         helper_function(box, box[item], Last_Index, unLockedBoxes)
 
