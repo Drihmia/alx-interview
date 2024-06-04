@@ -7,15 +7,21 @@ from typing import List, Dict
 
 
 def canUnlockAll(box: List[List[int]]) -> bool:
+    """A Function that return true if all boxed are unlockable."""
+    size = len(box)
 
-    size = len(box) - 1
+    # If the length of the box is zero, is empty.
+    if not size:
+        return False
+
+    # If the first unlocked box is empty, no need to check the whole list.
+    if not len(box[0]):
+        return False
 
     unLockedBoxes = {box: True if not box else False
-                     for box in range(size + 1)}
-    # print(unLockedBoxes)
+                     for box in range(size)}
 
-    helper_function(box, box[0], size, unLockedBoxes)
-    # print(unLockedBoxes)
+    helper_function(box, box[0], size - 1, unLockedBoxes)
 
     if False in unLockedBoxes.values():
         return False
@@ -24,13 +30,23 @@ def canUnlockAll(box: List[List[int]]) -> bool:
 
 
 def helper_function(box: List[List[int]],
-                    innerBox: List[int], size: int,
+                    innerBox: List[int], Last_Index: int,
                     unLockedBoxes: Dict[int, bool]) -> Dict[int, bool]:
+    """
+    A recursive helper function that return a dictionary of
+    unlocked and locked boxes, the keys are the boxes's index and the values,
+    are either, True for unlocked boxes or False for locked boxes.
+    """
+
     for item in innerBox:
-        if item > size or unLockedBoxes.get(item):
+        if item > Last_Index or unLockedBoxes.get(item):
             continue
         unLockedBoxes[item] = True
 
-        helper_function(box, box[item], size, unLockedBoxes)
+        # Avoiding unecessary recursive calls.
+        # if False not in unLockedBoxes.values():
+        # return unLockedBoxes
+
+        helper_function(box, box[item], Last_Index, unLockedBoxes)
 
     return unLockedBoxes
