@@ -2,10 +2,9 @@
 """
 trying to implement a solution for the lockbox problem using recursion
 """
-from typing import List
 
 
-def canUnlockAll(box: List[List[int]]) -> bool:
+def canUnlockAll(box) -> bool:
     """A Function that return true if all boxed are unlockable."""
     if type(box) is not list:
         return False
@@ -23,7 +22,7 @@ def canUnlockAll(box: List[List[int]]) -> bool:
     if not len(box[0]):
         return True
 
-    Unlockedboxes_list: List[int] = [0]
+    Unlockedboxes_list = [0]
     Unlockedboxes_set = {0}
 
     for inner in Unlockedboxes_list:
@@ -32,6 +31,6 @@ def canUnlockAll(box: List[List[int]]) -> bool:
                 Unlockedboxes_set.add(key)
                 Unlockedboxes_list.append(key)
 
-    if len(Unlockedboxes_set) == len(box):
+    if len(Unlockedboxes_set) == size:
         return True
     return False
