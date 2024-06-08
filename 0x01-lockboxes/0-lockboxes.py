@@ -1,10 +1,8 @@
 #!/usr/bin/python3
-
 """
 trying to implement a solution for the lockbox problem using recursion
 """
-from typing import List, Dict
-import sys
+from typing import List
 
 
 def canUnlockAll(box: List[List[int]]) -> bool:
@@ -17,7 +15,6 @@ def canUnlockAll(box: List[List[int]]) -> bool:
             return False
 
     size = len(box)
-
     # If the length of the box is zero, is empty.
     if not size:
         return False
@@ -26,39 +23,15 @@ def canUnlockAll(box: List[List[int]]) -> bool:
     if not len(box[0]):
         return True
 
-    unLockedBoxes = {box: True if not box else False
-                     for box in range(size)}
-    original_limit = sys.getrecursionlimit()
-    try:
-        new_limit = 1500
-        sys.setrecursionlimit(new_limit)
-    except Exception as e:
-        print(e)
-    finally:
-        sys.setrecursionlimit(original_limit)
+    Unlockedboxes_list: List[int] = [0]
+    Unlockedboxes_set = {0}
 
-    helper_function(box, box[0], size - 1, unLockedBoxes)
+    for inner in Unlockedboxes_list:
+        for key in box[inner]:
+            if key < size and key not in Unlockedboxes_set:
+                Unlockedboxes_set.add(key)
+                Unlockedboxes_list.append(key)
 
-    if False in unLockedBoxes.values():
-        return False
-    else:
+    if len(Unlockedboxes_set) == len(box):
         return True
-
-
-def helper_function(box: List[List[int]],
-                    innerBox: List[int], Last_Index: int,
-                    unLockedBoxes: Dict[int, bool]) -> Dict[int, bool]:
-    """
-    A recursive helper function that return a dictionary of
-    unlocked and locked boxes, the keys are the boxes's index and the values,
-    are either, True for unlocked boxes or False for locked boxes.
-    """
-
-    for item in innerBox:
-        if item > Last_Index or unLockedBoxes.get(item):
-            continue
-        unLockedBoxes[item] = True
-
-        helper_function(box, box[item], Last_Index, unLockedBoxes)
-
-    return unLockedBoxes
+    return False
