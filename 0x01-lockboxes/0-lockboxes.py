@@ -4,6 +4,7 @@
 trying to implement a solution for the lockbox problem using recursion
 """
 from typing import List, Dict
+import sys
 
 
 def canUnlockAll(box: List[List[int]]) -> bool:
@@ -27,6 +28,14 @@ def canUnlockAll(box: List[List[int]]) -> bool:
 
     unLockedBoxes = {box: True if not box else False
                      for box in range(size)}
+    original_limit = sys.getrecursionlimit()
+    try:
+        new_limit = 1500
+        sys.setrecursionlimit(new_limit)
+    except Exception as e:
+        print(e)
+    finally:
+        sys.setrecursionlimit(original_limit)
 
     helper_function(box, box[0], size - 1, unLockedBoxes)
 
