@@ -16,7 +16,7 @@ except ImportError:
     install('sympy')
     from sympy import factorint
 
-from sympy import factorint
+from sympy import factorint  # noqa
 
 
 def minOperations(n):
@@ -26,8 +26,15 @@ def minOperations(n):
     Copy All and Paste. Given a number n, write a method that calculates the
     fewest number of operations needed to result in exactly n H characters
     in the file."""
+
+    if not isinstance(n, int) or n <= 0:
+        return 0
+
     factorial = factorint(n)
+
     number_operations = 0
+
     for k, v in factorial.items():
         number_operations += k * v
+
     return number_operations
