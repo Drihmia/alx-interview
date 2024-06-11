@@ -1,5 +1,21 @@
 #!/usr/bin/python3
 """Minimum Operations"""
+import subprocess
+import sys
+
+
+# Function to install a package
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+
+# Try to import the package; if it fails, install it
+try:
+    from sympy import factorint
+except ImportError:
+    install('sympy')
+    from sympy import factorint
+
 from sympy import factorint
 
 
