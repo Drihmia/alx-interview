@@ -1,65 +1,50 @@
 #!/usr/bin/python3
 """
-    Log parsing
-## input format:
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
-## Notes:
-# if the format is not this one, the line must be skipped.
-# After every 10 lines and/or a keyboard interruption (CTRL + C),
-the following statistics from the beginning will be printed:
-# Total file size: File size: <total size>
-# where <total size> is the sum of all previous <file size>
-# Number of lines by status code:
-# possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
-# if a status code doesn’t appear or is not an integer,
-don’t print anything for this status status_code_dict
-# format: <status code>: <number>
-# status codes should be printed in ascending order
-
+this a script that reads fron stdin line by line and computes metrics.
+this a script that reads fron stdin line by line and computes metrics.
 """
-from signal import signal, SIGINT
-from sys import stdin
-from typing import Dict
+import sys
 
 
-def print_output(status_code_dict: Dict[int, int], file_size: int) -> None:
+def print_sorted(dic, size):
     """
-    Print the parsing output to stdout
-
-    Args:
-        status_code_dict: a dict of status code and number of thier occurrence.
-        file_size: an integer that refers to file size
+    A fucntion that sort a dic by keys and print
+        the size and the dictionary
     """
-    print("File size:", file_size)
-    for k, v in status_code_dict.items():
-        if v:
-            print(f"{k}: {v}")
+    dic = dict(sorted(dic.items()))
+    print("File size:", size, flush=True)
+    for key, value in dic.items():
+        print(str(key) + ":", value, flush=True)
 
 
-def hundler(_, __):
-    print_output(dict_count, file_size_total)
+def main():
+    """
+    main funtion : entry point
+    """
+
+    dic = {}
+    total_size = 0
+    N_lines = 0
+    try:
+        for lin in sys.stdin:
+            try:
+                line = lin.split()
+                total_size += int(line[-1])
+                tmp = line[-2]
+                tmp = int(tmp)
+                if tmp in dic:
+                    dic[tmp] += 1
+                else:
+                    dic[tmp] = 1
+                N_lines += 1
+            except (IndexError, ValueError):
+                continue
+            if N_lines % 10 == 0:
+                print_sorted(dic, total_size)
+        print_sorted(dic, total_size)
+    except KeyboardInterrupt as e:
+        print_sorted(dic, total_size)
 
 
 if __name__ == "__main__":
-    counter = 0
-    dict_count = {
-        200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0
-    }
-    file_size_total = 0
-
-    for line in stdin:
-        line_splited = line.split()
-        if len(line_splited) == 9:
-            try:
-                status_code = int(line_splited[-2])
-                file_size = int(line_splited[-1])
-                counter += 1
-            except (TypeError, IndexError) as e:
-                continue
-
-            dict_count[status_code] += 1
-            file_size_total += file_size
-
-        if not counter % 10:
-            print_output(dict_count, file_size_total)
-        signal(SIGINT, hundler)
+    main()
