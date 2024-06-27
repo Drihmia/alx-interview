@@ -25,6 +25,7 @@ def dec_to_bin(num: int) -> str:
     # string = reversed_string[:h] + ' ' + reversed_string[h:]
     return reversed_string
 
+
 def dec_to_bin_int(num: int) -> int:
     """
     converting decimal number into a binary number as an integer
@@ -48,6 +49,7 @@ def check_dec_to_bin_int(num: int) -> bool:
     builtin = int(bin(num)[2:])
     # print(f"custom: {custom}\nbuilin: {builtin}")
     return custom == builtin
+
 
 def dec_to_bin_bitwise(num: int) -> int:
     """
@@ -74,6 +76,7 @@ def check_dec_to_bitwise(num: int) -> bool:
     # print(f"custom: {custom}\nbuilin: {builtin}")
     return custom == builtin
 
+
 def hex_to_bin(hexa: str) -> str:
     """
     converting hexadecimal into a Binary
@@ -94,6 +97,7 @@ def print_bin(Binary: str) -> None:
     Binary = Binary[::-1]
     print('---------------', Binary)
 
+
 def is_valid_utf8(byte_sequence):
     byte_sequence = bytes(byte_sequence)
     try:
@@ -102,9 +106,12 @@ def is_valid_utf8(byte_sequence):
     except UnicodeDecodeError:
         return False
 
+
 def is_valid_utf8_list(lst):
     for i in lst:
         print(i, "is", is_valid_utf8(i))
+
+
 if __name__ == "__main__":
     from time import time, sleep
     # print_bin(dec_to_bin(48))
