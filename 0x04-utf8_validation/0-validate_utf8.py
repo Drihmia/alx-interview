@@ -9,8 +9,8 @@ def validUTF8(data):
     """
     Determines if a given data set represents a valid UTF-8 encoding.
     """
+    remaining_nebes = 0
     for num in data:
-        remaining_nebes = 0
         if not remaining_nebes:
             if (num >> 5 == 0b110):
                 remaining_nebes = 1
@@ -24,4 +24,4 @@ def validUTF8(data):
             if num >> 6 != 0b10:
                 return False
             remaining_nebes -= 1
-    return True
+    return remaining_nebes == 0
