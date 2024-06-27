@@ -32,7 +32,7 @@ def validUTF8(data: List[int]) -> bool:
             else:
                 return False
         else:
-            if (num >> 6) != 0b10:
+            if (num & 0b11000000) != 0b10000000:
                 return False
             remaining_bytes -= 1
 
