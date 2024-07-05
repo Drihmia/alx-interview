@@ -20,41 +20,9 @@ def queen(N):
     def is_valid(board, x, y):
         for row in board:
 
-            # check rows
-            if x == row[0]:
+            if any([x == row[0], y == row[1], x + y == row[0] + row[1],
+                    x - y == row[0] - row[1]]):
                 return False
-
-            # check columns
-            if y == row[1]:
-                return False
-
-            # diagonale top-right
-            if x + y == sum(row):
-                return False
-
-            # diagonale top-left
-            x_1, y_1 = x, y
-            y_x_sum = x + y
-            row_sum = sum(row)
-
-            if ((y_x_sum % 2 == 0 and row_sum % 2 == 0)) or (
-                    y_x_sum % 2 == 1 and row_sum % 2 == 1):
-
-                diff = y_x_sum - row_sum
-                # path 1
-                if diff < 0:
-                    for i in range((-diff) // 2):
-                        x_1 += 1
-                        y_1 += 1
-                        if [x_1, y_1] == row:
-                            return False
-                # path 2
-                else:
-                    for i in range(diff // 2):
-                        x_1 -= 1
-                        y_1 -= 1
-                        if [x_1, y_1] == row:
-                            return False
         return True
 
     helper_function(0)
