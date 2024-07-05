@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """Module for N queens problem."""
-from typing import List
 
 
-def queen(N: int) -> List[List[List[int]]]:
-    output: List[List[List[int]]] = []
-    pos: List[List[int]] = []
+def queen(N):
+    output = []
+    pos = []
 
     def helper_function(x: int):
         if x == N:
@@ -65,7 +64,7 @@ def queen(N: int) -> List[List[List[int]]]:
 if __name__ == "__main__":
     import sys
     if len(sys.argv) != 2:
-        print("Usage: ./0-nqueens.py N")
+        print("Usage: nqueens N")
         sys.exit(1)
 
     try:
