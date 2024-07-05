@@ -19,9 +19,8 @@ def queen(N):
 
     def is_valid(board, x, y):
         for row in board:
-
-            if any([x == row[0], y == row[1], x + y == row[0] + row[1],
-                    x - y == row[0] - row[1]]):
+            if (x == row[0] or y == row[1] or x + y == row[0] + row[1] or
+                    x - y == row[0] - row[1]):
                 return False
         return True
 
