@@ -11,5 +11,48 @@ def island_perimeter(grid):
     """
     if not grid:
         return 0
-    list_of_1 = [row.count(1) for row in grid if row.count(1) > 0]
-    return (len(list_of_1) + max(list_of_1)) * 2
+
+    max_idx_x = len(grid[0]) - 1
+    max_idx_y = len(grid) - 1
+    island_per = 0
+    visited = set()
+
+    def recursive_island_perimeter(x, y):
+        """Recursive function to compute the perimeter of an island if exist.
+        """
+        if x < 0 or x > max_idx_x or y < 0 or y > max_idx_y:
+            return
+
+        if grid[y][x] == 0:
+            return
+
+        if (x, y) not in visited:
+            visited.add((x, y))
+        else:
+            return
+
+        nonlocal island_per
+
+        if x == max_idx_x or not grid[y][x + 1]:
+            island_per += 1
+
+        if y == max_idx_y or not grid[y + 1][x]:
+            island_per += 1
+
+        if not x or not grid[y][x - 1]:
+            island_per += 1
+
+        if not y or not grid[y - 1][x]:
+            island_per += 1
+
+        recursive_island_perimeter(x + 1, y)
+        recursive_island_perimeter(x, y - 1)
+        recursive_island_perimeter(x - 1, y)
+        recursive_island_perimeter(x, y + 1)
+
+    for y in range(max_idx_y + 1):
+        for x in range(max_idx_x + 1):
+            if grid[y][x]:
+                print(f"first hit {x} : {y}")
+                recursive_island_perimeter(x, y)
+                return island_per
