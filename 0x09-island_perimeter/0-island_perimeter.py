@@ -55,3 +55,4 @@ def island_perimeter(grid):
             if grid[y][x]:
                 recursive_island_perimeter(x, y)
                 return island_per
+    return island_per
