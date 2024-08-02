@@ -53,6 +53,5 @@ def island_perimeter(grid):
     for y in range(max_idx_y + 1):
         for x in range(max_idx_x + 1):
             if grid[y][x]:
-                print(f"first hit {x} : {y}")
                 recursive_island_perimeter(x, y)
                 return island_per
