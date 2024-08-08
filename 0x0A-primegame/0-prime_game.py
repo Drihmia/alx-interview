@@ -29,22 +29,28 @@ def round_winner(n):
     """
     if not n:
         return None
+    if not isinstance(n, int):
+        return None
+
+    if n < 1:
+        return None
+
+    if n == 1:
+        return 'Ben'
 
     ints = list(range(2, n + 1))
-    if not ints:
-        return 'Ben'
 
     for i in range(n - 1):
         if not ints[i]:
             continue
 
-        if not is_prime(ints[i]):
-            ints[i] = 0
-        else:
+        if is_prime(ints[i]):
             for j in range(i, n - 1, ints[i]):
                 if i == j:
                     continue
                 ints[j] = 0
+        else:
+            ints[i] = 0
 
     # Remove duplicates 0s
     l = set(ints)
@@ -55,7 +61,7 @@ def round_winner(n):
 
     # Since Maria starts first,
     # if the number of prime numbers is odd, Maria wins
-    if num_prime_numbers % 2:
+    if num_prime_numbers % 2 == 1:
         return 'Maria'
     else:
         return 'Ben'
@@ -66,13 +72,7 @@ def isWinner(x, nums):
     x: an integer representing the number of rounds
     nums: an array of n integers
     """
-    if len(nums) != x:
-        return None
-
-    if not x or not nums:
-        return None
-
-    if x == 1 and nums[0] == 0:
+    if not x or not nums or len(nums) != x:
         return None
 
     maria_score = 0
