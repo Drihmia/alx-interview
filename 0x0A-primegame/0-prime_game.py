@@ -27,12 +27,7 @@ def round_winner(n):
     n: an integer representing the number of integers
     Determine the winner of the round using the Sieve of Eratosthenes
     """
-    if not n:
-        return None
-    if not isinstance(n, int):
-        return None
-
-    if n < 1:
+    if not n or not isinstance(n, int) or n < 1:
         return None
 
     if n == 1:
@@ -41,13 +36,8 @@ def round_winner(n):
     ints = list(range(2, n + 1))
 
     for i in range(n - 1):
-        if not ints[i]:
-            continue
-
-        if is_prime(ints[i]):
-            for j in range(i, n - 1, ints[i]):
-                if i == j:
-                    continue
+        if ints[i] != 0 and is_prime(ints[i]):
+            for j in range(i + ints[i], n - 1, ints[i]):
                 ints[j] = 0
         else:
             ints[i] = 0
@@ -72,16 +62,17 @@ def isWinner(x, nums):
     x: an integer representing the number of rounds
     nums: an array of n integers
     """
-    if not x or not nums or len(nums) != x:
+    if not nums or x > len(nums) or x < 1:
         return None
 
     maria_score = 0
     ben_score = 0
 
-    for n in nums:
-        if round_winner(n) == 'Maria':
+    for n in range(x):
+        winner = round_winner(nums[n])
+        if winner == 'Maria':
             maria_score += 1
-        elif round_winner(n) == 'Ben':
+        elif winner == 'Ben':
             ben_score += 1
 
     # Decision is made
